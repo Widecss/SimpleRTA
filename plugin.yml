@@ -1,0 +1,27 @@
+name: SimpleRTA
+description: A simple plugin about RTA Game
+main: cn.widecss.SimpleRTA
+version: 0.0.1
+api-version: 1.16
+
+authors:
+  - Widecss
+
+commands:
+  test:
+    description: A simple test command
+  admin:
+    description: A admin command can change the plugin settings
+
+#softdepend:
+#  - ProtocolSupport
+
+permissions:
+  simplertp.admin:
+    description: Permission to use the admin command
+#  skins.*:
+#    description: All permissions combined
+#    children:
+#      skins.menu: true
+#      skins.info: true
+#      skins.reload: true

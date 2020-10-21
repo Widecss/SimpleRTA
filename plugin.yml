@@ -8,10 +8,12 @@ authors:
   - Widecss
 
 commands:
-  test:
-    description: A simple test command
-  admin:
-    description: A admin command can change the plugin settings
+  rtahelp:
+    description: A command can print help info to the message list
+  setrunner:
+    description: A command can set the runner to the game
+  rtareload:
+    description: A command can change the plugin settings
 
 #softdepend:
 #  - ProtocolSupport

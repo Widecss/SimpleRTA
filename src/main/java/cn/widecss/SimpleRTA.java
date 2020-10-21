@@ -4,14 +4,21 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class SimpleRTA extends JavaPlugin {
 
+    private ConfigManager configManager;
+
     @Override
     public void onLoad() {
+        configManager = new ConfigManager(this);
         getLogger().info("SimpleRTA 已加载");
     }
 
     @Override
     public void onEnable() {
-        getLogger().info("SimpleRTA 已启用");
+        if (configManager.isEnabled()) {
+            getLogger().info("SimpleRTA 已启用");
+        } else {
+            this.setEnabled(false);
+        }
     }
 
     @Override

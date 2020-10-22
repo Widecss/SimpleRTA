@@ -15,25 +15,22 @@ public class CommandSetRunner extends BaseCommand {
     }
 
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
-        if (commandSender instanceof Player) {
-            if (strings.length == 0) {
-                commandSender.sendMessage("请输入玩家名称");
-            }
-
-            AtomicBoolean found = new AtomicBoolean(false);
-            BukkitUtil.runOnOnlinePlayer(player -> {
-                if (player.getDisplayName().equals(strings[0])) {
-                    found.set(true);
-                }
-            });
-
-            if (found.get()) {
-                this.context.setRunnerName(strings[0]);
-            } else {
-                commandSender.sendMessage("该玩家不存在, 请重新输入");
-            }
-            return true;
+        if (strings.length == 0) {
+            commandSender.sendMessage("请输入玩家名称");
         }
-        return false;
+
+        AtomicBoolean found = new AtomicBoolean(false);
+        BukkitUtil.runOnOnlinePlayer(player -> {
+            if (player.getDisplayName().equals(strings[0])) {
+                found.set(true);
+            }
+        });
+
+        if (found.get()) {
+            this.context.setRunnerName(strings[0]);
+        } else {
+            commandSender.sendMessage("该玩家不存在, 请重新输入");
+        }
+        return true;
     }
 }

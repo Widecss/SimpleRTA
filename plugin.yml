@@ -14,6 +14,8 @@ commands:
     description: A command can set the runner to the game
   rtareload:
     description: A command can change the plugin settings
+  start:
+    description: A command can start the game
 
 #softdepend:
 #  - ProtocolSupport

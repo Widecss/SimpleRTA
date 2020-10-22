@@ -3,7 +3,9 @@ package cn.widecss;
 import cn.widecss.cmd.CommandHelp;
 import cn.widecss.cmd.CommandReload;
 import cn.widecss.cmd.CommandSetRunner;
+import cn.widecss.cmd.CommandStart;
 import cn.widecss.inter.PlayerExecutor;
+import org.bukkit.command.PluginCommand;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -11,6 +13,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class SimpleRTAPlugin extends JavaPlugin {
 
@@ -18,6 +21,7 @@ public class SimpleRTAPlugin extends JavaPlugin {
     private boolean enabled;
 
     private String runnerName;
+    private AtomicBoolean started;
 
     @Override
     public void onLoad() {
@@ -50,18 +54,27 @@ public class SimpleRTAPlugin extends JavaPlugin {
         getLogger().info("SimpleRTA 已禁用");
     }
 
-    public void sendToAllPlayer(String msg) {
-        BukkitUtil.runOnOnlinePlayer(player -> player.sendMessage(msg));
-    }
-
     public void reloadGame() {
 
     }
 
     private void addCommand() {
-        this.getCommand("rtahelp").setExecutor(new CommandHelp(this));
-        this.getCommand("rtareload").setExecutor(new CommandReload(this));
-        this.getCommand("setrunner").setExecutor(new CommandSetRunner(this));
+        PluginCommand rtaHelp = this.getCommand("rtahelp");
+        if (rtaHelp != null) {
+            rtaHelp.setExecutor(new CommandHelp(this));
+        }
+        PluginCommand rtaReload = this.getCommand("rtareload");
+        if (rtaReload != null) {
+            rtaReload.setExecutor(new CommandReload(this));
+        }
+        PluginCommand setRunner = this.getCommand("setrunner");
+        if (setRunner != null) {
+            setRunner.setExecutor(new CommandSetRunner(this));
+        }
+        PluginCommand start = this.getCommand("start");
+        if (start != null) {
+            start.setExecutor(new CommandStart(this));
+        }
     }
 
     public void setRunnerName(String runnerName) {

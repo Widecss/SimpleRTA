@@ -23,6 +23,10 @@ public class BukkitUtil {
         }
     }
 
+    public static void sendToAllPlayer(String msg) {
+        BukkitUtil.runOnOnlinePlayer(player -> player.sendMessage(msg));
+    }
+
     public String color(String text) {
         return ChatColor.translateAlternateColorCodes('&', text);
     }

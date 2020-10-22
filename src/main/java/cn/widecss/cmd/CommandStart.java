@@ -6,19 +6,19 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class CommandReload extends BaseCommand {
+public class CommandStart extends BaseCommand {
 
-    public CommandReload(SimpleRTAPlugin context) {
+    public CommandStart(SimpleRTAPlugin context) {
         super(context);
     }
 
+    @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
         if (strings.length > 0) {
             commandSender.sendMessage("指令参数过多, 请检查正确后再重新执行");
             return false;
         } else {
-            context.reloadGame();
-            BukkitUtil.sendToAllPlayer("游戏已被重载! 请设置一位 Runner 以开始游戏...");
+            BukkitUtil.sendToAllPlayer("游戏开始! 尽情享受!");
             return true;
         }
     }

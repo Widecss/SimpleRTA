@@ -4,15 +4,12 @@ import cn.widecss.cmd.CommandHelp;
 import cn.widecss.cmd.CommandReload;
 import cn.widecss.cmd.CommandSetRunner;
 import cn.widecss.cmd.CommandStart;
-import cn.widecss.inter.PlayerExecutor;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class SimpleRTAPlugin extends JavaPlugin {
@@ -20,11 +17,15 @@ public class SimpleRTAPlugin extends JavaPlugin {
     private YamlConfiguration config;
     private boolean enabled;
 
-    private String runnerName;
+    private PlayerManager playerManager;
+
     private AtomicBoolean started;
 
     @Override
     public void onLoad() {
+        playerManager = new PlayerManager(this);
+        started = new AtomicBoolean(false);
+
         config = (YamlConfiguration) getConfig();
         if (!config.isSet("enabled")) {
             config.set("enabled", true);
@@ -43,7 +44,6 @@ public class SimpleRTAPlugin extends JavaPlugin {
         if (enabled) {
             getLogger().info("SimpleRTA 已启用");
             this.addCommand();
-
         } else {
             this.setEnabled(false);
         }
@@ -52,10 +52,6 @@ public class SimpleRTAPlugin extends JavaPlugin {
     @Override
     public void onDisable() {
         getLogger().info("SimpleRTA 已禁用");
-    }
-
-    public void reloadGame() {
-
     }
 
     private void addCommand() {
@@ -77,8 +73,16 @@ public class SimpleRTAPlugin extends JavaPlugin {
         }
     }
 
-    public void setRunnerName(String runnerName) {
-        this.runnerName = runnerName;
+    public void startGame() {
+
+    }
+
+    public void reloadGame() {
+
+    }
+
+    public PlayerManager getPlayerManager() {
+        return playerManager;
     }
 
     public static void main(String[] args) {

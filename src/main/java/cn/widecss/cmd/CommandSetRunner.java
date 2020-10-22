@@ -6,7 +6,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class CommandSetRunner extends BaseCommand {
 
@@ -19,17 +19,19 @@ public class CommandSetRunner extends BaseCommand {
             commandSender.sendMessage("请输入玩家名称");
         }
 
-        AtomicBoolean found = new AtomicBoolean(false);
+        AtomicReference<Player> atomicReference = new AtomicReference<>(null);
         BukkitUtil.runOnOnlinePlayer(player -> {
             if (player.getDisplayName().equals(strings[0])) {
-                found.set(true);
+                atomicReference.set(player);
             }
         });
 
-        if (found.get()) {
-            this.context.setRunnerName(strings[0]);
-        } else {
+        Player player = atomicReference.get();
+        if (player == null) {
             commandSender.sendMessage("该玩家不存在, 请重新输入");
+        } else {
+            this.context.getPlayerManager().setRunner(player);
+            BukkitUtil.sendToAllPlayer("玩家 " + player.getDisplayName() + " 已被设置为 Runner");
         }
         return true;
     }

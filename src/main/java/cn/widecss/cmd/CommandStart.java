@@ -4,7 +4,6 @@ import cn.widecss.BukkitUtil;
 import cn.widecss.SimpleRTAPlugin;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 public class CommandStart extends BaseCommand {
 
@@ -19,6 +18,7 @@ public class CommandStart extends BaseCommand {
             return false;
         } else {
             BukkitUtil.sendToAllPlayer("游戏开始! 尽情享受!");
+            this.context.startGame();
             return true;
         }
     }

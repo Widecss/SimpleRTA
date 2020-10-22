@@ -15,11 +15,10 @@ public class CommandStart extends BaseCommand {
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
         if (strings.length > 0) {
             commandSender.sendMessage("指令参数过多, 请检查正确后再重新执行");
-            return false;
         } else {
+            this.context.getGameManager().startGame();
             BukkitUtil.sendToAllPlayer("游戏开始! 尽情享受!");
-            this.context.startGame();
-            return true;
         }
+        return true;
     }
 }

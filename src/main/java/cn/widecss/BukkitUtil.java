@@ -3,6 +3,7 @@ package cn.widecss;
 import cn.widecss.inter.PlayerExecutor;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 
 import java.util.Collection;
@@ -23,8 +24,12 @@ public class BukkitUtil {
         }
     }
 
+    public static void setAllPlayerGameMode(GameMode mode) {
+        runOnOnlinePlayer(player -> player.setGameMode(mode));
+    }
+
     public static void sendToAllPlayer(String msg) {
-        BukkitUtil.runOnOnlinePlayer(player -> player.sendMessage(msg));
+        runOnOnlinePlayer(player -> player.sendMessage(msg));
     }
 
     public String color(String text) {

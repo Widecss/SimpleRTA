@@ -10,23 +10,20 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class SimpleRTAPlugin extends JavaPlugin {
 
-    private YamlConfiguration config;
     private boolean enabled;
 
+    private GameManager gameManager;
     private PlayerManager playerManager;
-
-    private AtomicBoolean started;
 
     @Override
     public void onLoad() {
+        gameManager = new GameManager(this);
         playerManager = new PlayerManager(this);
-        started = new AtomicBoolean(false);
 
-        config = (YamlConfiguration) getConfig();
+        YamlConfiguration config = (YamlConfiguration) getConfig();
         if (!config.isSet("enabled")) {
             config.set("enabled", true);
             config.options().header(
@@ -73,16 +70,12 @@ public class SimpleRTAPlugin extends JavaPlugin {
         }
     }
 
-    public void startGame() {
-
-    }
-
-    public void reloadGame() {
-
-    }
-
     public PlayerManager getPlayerManager() {
         return playerManager;
+    }
+
+    public GameManager getGameManager() {
+        return gameManager;
     }
 
     public static void main(String[] args) {

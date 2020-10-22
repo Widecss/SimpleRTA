@@ -6,7 +6,7 @@ import org.bukkit.event.Listener;
 
 public class BaseListener implements Listener {
 
-    protected SimpleRTAPlugin context;
+    protected final SimpleRTAPlugin context;
 
     public BaseListener(SimpleRTAPlugin context) {
         this.context = context;

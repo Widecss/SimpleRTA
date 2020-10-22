@@ -17,7 +17,7 @@ public class CommandReload extends BaseCommand {
             commandSender.sendMessage("指令参数过多, 请检查正确后再重新执行");
             return false;
         } else {
-            context.reloadGame();
+            this.context.getGameManager().reloadGame();
             BukkitUtil.sendToAllPlayer("游戏已被重载! 请设置一位 Runner 以开始游戏...");
             return true;
         }

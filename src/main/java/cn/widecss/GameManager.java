@@ -2,6 +2,7 @@ package cn.widecss;
 
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class GameManager {
 
@@ -11,7 +12,7 @@ public class GameManager {
 
     private GameType gameType;
 
-    private long startTime;
+    private long startTime, completeTime;
 
     private boolean isArrivedNether, isArrivedEnd;
 
@@ -20,21 +21,50 @@ public class GameManager {
     }
 
     public void startGame() {
-        startTime = System.currentTimeMillis();
-        BukkitUtil.setAllPlayerGameMode(GameMode.SURVIVAL);
-        setStarted(true);
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                BukkitUtil.sendToAllPlayer("游戏即将开始!");
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException ignored) {
+                }
+                for (int i = 0; i < 3; i++) {
+                    BukkitUtil.sendToAllPlayer((i + 1) + "!");
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException ignored) {
+                    }
+                }
+                BukkitUtil.sendToAllPlayer("游戏开始!");
+                BukkitUtil.setAllPlayerGameMode(GameMode.SURVIVAL);
+                GameManager.this.startTime = System.currentTimeMillis();
+                GameManager.this.setStarted(true);
+            }
+        }.runTask(this.context);
+
     }
 
-    public void completeGame() {
+    public void completeGame(Player player) {
+        completeTime = System.currentTimeMillis();
+        if (player == null) {
+            BukkitUtil.sendToAllPlayer("恭喜完成挑战! 用时: " + calculateTimeConsuming(completeTime));
+        } else {
+            BukkitUtil.sendToAllPlayer("恭喜完成挑战! 用时: " + calculateTimeConsuming(completeTime) +
+                    "\n最终击杀: " + player.getDisplayName());
+        }
         BukkitUtil.setAllPlayerGameMode(GameMode.SPECTATOR);
         setStarted(false);
     }
 
     public void reloadGame() {
         startTime = 0L;
+        completeTime = 0L;
 
         isArrivedNether = false;
         isArrivedEnd = false;
+
+        gameType = null;
 
         setStarted(false);
     }
@@ -58,7 +88,11 @@ public class GameManager {
     }
 
     private String calculateTimeConsuming() {
-        long time = (System.currentTimeMillis() - startTime) / 1000;
+        return calculateTimeConsuming(System.currentTimeMillis());
+    }
+
+    private String calculateTimeConsuming(long currTime) {
+        long time = (currTime - startTime) / 1000;
         int day = (int) ((time / (60 * 60 * 24)));
         int hour = (int) ((time / (60 * 60)) % 24);
         int minute = (int) ((time / 60) % 60);

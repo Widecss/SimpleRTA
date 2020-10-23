@@ -22,7 +22,7 @@ public class GameManager {
         this.context = context;
     }
 
-    public void startGame() {
+    public void startCooperate() {
         BukkitUtil.sendToAllPlayer("游戏即将开始!");
         BukkitRunnable startRunnable = new BukkitRunnable() {
             @Override
@@ -46,6 +46,10 @@ public class GameManager {
                 startRunnable.runTask(GameManager.this.context);
             }
         }.runTaskLaterAsynchronously(this.context, 20);
+    }
+
+    public void startCombat() {
+        BukkitUtil.sendToAllPlayer("对不起, 对抗模式暂时未完成, 请选择合作模式开始游戏.");
     }
 
     public void completeGame(Player player) {
@@ -114,6 +118,9 @@ public class GameManager {
     }
 
     public GameType getGameType() {
+        if (gameType == null) {
+            gameType = GameType.COOPERATE;
+        }
         return gameType;
     }
 

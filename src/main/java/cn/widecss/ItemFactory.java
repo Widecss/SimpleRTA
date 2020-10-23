@@ -18,4 +18,9 @@ public class ItemFactory {
         item.setAmount(64);
         return item;
     }
+
+    public static ItemStack getCompassPointingRunner() {
+
+        return null;
+    }
 }

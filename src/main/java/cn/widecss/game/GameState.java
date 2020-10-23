@@ -1,14 +1,15 @@
 package cn.widecss.game;
 
-public enum GameType {
-    COOPERATE(0, "合作"),
-    COMBAT(1, "对抗");
+public enum GameState {
+    PREPARATION(0, "准备"),
+    START(1, "开始"),
+    FINAL(2, "结束");
 
     private final int typeID;
 
     private final String typeName;
 
-    GameType(int typeID, String typeName) {
+    GameState(int typeID, String typeName) {
         this.typeID = typeID;
         this.typeName = typeName;
     }
@@ -21,17 +22,21 @@ public enum GameType {
         return typeName;
     }
 
-    public static GameType getFromID(int typeID) {
+    public static GameState getFromID(int typeID) {
         checkTypeID(typeID);
         if (typeID == 0) {
-            return COOPERATE;
+            return PREPARATION;
+        } else if (typeID == 1) {
+            return START;
         } else {
-            return COMBAT;
+            return FINAL;
         }
     }
 
     private static void checkTypeID(int typeID) {
-        if ((COOPERATE.getTypeID() == typeID) || (COMBAT.getTypeID() == typeID)) {
+        if ((PREPARATION.getTypeID() == typeID)
+                || (START.getTypeID() == typeID)
+                || (FINAL.getTypeID() == typeID)) {
             return;
         }
         throw new IllegalArgumentException("模式id不存在: " + typeID);

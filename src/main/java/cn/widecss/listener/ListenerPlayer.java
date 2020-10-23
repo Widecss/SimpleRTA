@@ -11,7 +11,6 @@ import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.inventory.PlayerInventory;
 
 public class ListenerPlayer extends BaseListener {
 
@@ -69,13 +68,14 @@ public class ListenerPlayer extends BaseListener {
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         this.context.getPlayerManager().getOtherPlayer().add(player);
+
         player.setGameMode(GameMode.ADVENTURE);
+        player.getInventory().clear();
 
         // -- debug --
         if (this.context.getConfig().getBoolean("debug")) {
-            PlayerInventory inventory = player.getInventory();
-            inventory.addItem(ItemFactory.getNiceDiamondSword());
-            inventory.addItem(ItemFactory.getASetOfZombieSpawnEgg());
+            player.getInventory().addItem(ItemFactory.getNiceDiamondSword());
+            player.getInventory().addItem(ItemFactory.getASetOfZombieSpawnEgg());
         }
     }
 

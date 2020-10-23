@@ -62,7 +62,7 @@ public class CommandHandler implements CommandExecutor {
                         "/rta <func> [args...] " + "\n" +
                         " func: " + "\n" +
                         "  - setmode <id> " + "\n" +
-                        "            设置游戏的模式,   0: 合作(COOPERATE),   1: 对抗(COMBAT) " + "\n" +
+                        "            设置游戏的模式(默认: 0),    0: 合作    1: 对抗 " + "\n" +
                         "  - setrunner <name> " + "\n" +
                         "            对抗模式下设置一名作为 Runner 的玩家, 其余的默认为 Hunter" + "\n" +
                         "  - start " + "\n" +
@@ -82,8 +82,10 @@ public class CommandHandler implements CommandExecutor {
                 commandSender.sendMessage("还没有设置 Runner, 请使用 /rta setrunner <name> 设置");
                 return;
             }
+            this.context.getGameManager().startCombat();
+        } else {
+            this.context.getGameManager().startCooperate();
         }
-        this.context.getGameManager().startGame();
     }
 
     public void reset(CommandSender commandSender, Command command, String s, String[] strings) {
@@ -94,11 +96,7 @@ public class CommandHandler implements CommandExecutor {
     public void setMode(CommandSender commandSender, Command command, String s, String[] strings) {
         if (strings.length == 0) {
             GameType gameType = this.context.getGameManager().getGameType();
-            if (gameType == null) {
-                commandSender.sendMessage("还没有设置游戏模式, 请输入模式id");
-            } else {
-                commandSender.sendMessage("目前的游戏模式为: " + gameType.getTypeName());
-            }
+            commandSender.sendMessage("目前的游戏模式为: " + gameType.getTypeName());
         } else {
             try {
                 GameType gameType = GameType.getFromID(Integer.parseInt(strings[0]));

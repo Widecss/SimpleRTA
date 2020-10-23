@@ -74,18 +74,21 @@ public class CommandHandler implements CommandExecutor {
     }
 
     public void start(CommandSender commandSender, Command command, String s, String[] strings) {
+        if (this.context.getGameManager().isStarted()) {
+            commandSender.sendMessage("游戏已经开始, 请不要重复执行");
+        }
         if (this.context.getGameManager().getGameType() == GameType.COMBAT) {
             if (this.context.getPlayerManager().getRunner() == null) {
                 commandSender.sendMessage("还没有设置 Runner, 请使用 /rta setrunner <name> 设置");
                 return;
             }
         }
-        context.getGameManager().startGame();
+        this.context.getGameManager().startGame();
     }
 
     public void reset(CommandSender commandSender, Command command, String s, String[] strings) {
         this.context.getGameManager().resetGame();
-        BukkitUtil.sendToAllPlayer("游戏已被重载, 请设置一位 Runner 以开始游戏...");
+        BukkitUtil.sendToAllPlayer("游戏已被重置, 请设置一位 Runner 以开始游戏...");
     }
 
     public void setMode(CommandSender commandSender, Command command, String s, String[] strings) {

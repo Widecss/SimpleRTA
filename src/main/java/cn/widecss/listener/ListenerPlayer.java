@@ -3,8 +3,8 @@ package cn.widecss.listener;
 import cn.widecss.ItemFactory;
 import cn.widecss.PlayerManager;
 import cn.widecss.SimpleRTAPlugin;
+import cn.widecss.game.GameType;
 import org.bukkit.GameMode;
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
@@ -23,22 +23,24 @@ public class ListenerPlayer extends BaseListener {
     public void onPlayerMove(PlayerMoveEvent event) {
         Player player = event.getPlayer();
         if (this.context.getGameManager().isStarted()) {
-            PlayerManager manager = this.context.getPlayerManager();
-            if (manager.getRunner().getName().equals(player.getName())) {
-                switch (player.getWorld().getEnvironment()) {
-                    case NORMAL: {
-                        manager.setOverLocation(event.getTo());
-                        break;
+            if (this.context.getGameManager().getGameType() == GameType.COMBAT) {
+                PlayerManager manager = this.context.getPlayerManager();
+                if (manager.getRunner().getName().equals(player.getName())) {
+                    switch (player.getWorld().getEnvironment()) {
+                        case NORMAL: {
+                            manager.setOverLocation(event.getTo());
+                            break;
+                        }
+                        case NETHER: {
+                            manager.setNetherLocation(event.getTo());
+                            break;
+                        }
+                        case THE_END: {
+                            manager.setEndLocation(event.getTo());
+                            break;
+                        }
+                        default:
                     }
-                    case NETHER: {
-                        manager.setNetherLocation(event.getTo());
-                        break;
-                    }
-                    case THE_END: {
-                        manager.setEndLocation(event.getTo());
-                        break;
-                    }
-                    default:
                 }
             }
         } else {

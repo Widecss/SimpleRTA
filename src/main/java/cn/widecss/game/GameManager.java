@@ -23,14 +23,19 @@ public class GameManager {
     }
 
     public void startGame() {
+        BukkitUtil.sendToAllPlayer("游戏即将开始!");
+        BukkitRunnable startRunnable = new BukkitRunnable() {
+            @Override
+            public void run() {
+                GameManager.this.startTime = System.currentTimeMillis();
+                GameManager.this.setStarted(true);
+                BukkitUtil.setAllPlayerGameMode(GameMode.SURVIVAL);
+                BukkitUtil.sendToAllPlayer("游戏开始! 尽情享受!");
+            }
+        };
         new BukkitRunnable() {
             @Override
             public void run() {
-                BukkitUtil.sendToAllPlayer("游戏即将开始!");
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException ignored) {
-                }
                 for (int i = 3; i > 0; i--) {
                     BukkitUtil.sendToAllPlayer(i + "!");
                     try {
@@ -38,12 +43,9 @@ public class GameManager {
                     } catch (InterruptedException ignored) {
                     }
                 }
-                BukkitUtil.setAllPlayerGameMode(GameMode.SURVIVAL);
-                GameManager.this.startTime = System.currentTimeMillis();
-                GameManager.this.setStarted(true);
-                BukkitUtil.sendToAllPlayer("游戏开始! 尽情享受!");
+                startRunnable.runTask(GameManager.this.context);
             }
-        }.runTask(this.context);
+        }.runTaskLaterAsynchronously(this.context, 20);
     }
 
     public void completeGame(Player player) {
@@ -100,7 +102,7 @@ public class GameManager {
         int minute = (int) ((time / 60) % 60);
         int second = (int) (time % 60);
 
-        return day + " 天 " + hour + " 时 " + minute + " 分 " + second + "秒";
+        return day + " 天 " + hour + " 时 " + minute + " 分 " + second + " 秒";
     }
 
     public boolean isStarted() {

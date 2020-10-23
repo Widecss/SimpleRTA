@@ -1,5 +1,6 @@
 package cn.widecss.listener;
 
+import cn.widecss.ItemFactory;
 import cn.widecss.PlayerManager;
 import cn.widecss.SimpleRTAPlugin;
 import org.bukkit.GameMode;
@@ -8,6 +9,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.inventory.PlayerInventory;
 
 public class ListenerPlayer extends BaseListener {
 
@@ -65,5 +67,12 @@ public class ListenerPlayer extends BaseListener {
         Player player = event.getPlayer();
         this.context.getPlayerManager().getOtherPlayer().add(player);
         player.setGameMode(GameMode.ADVENTURE);
+
+        // -- debug --
+        if (this.context.getConfig().getBoolean("debug")) {
+            PlayerInventory inventory = player.getInventory();
+            inventory.addItem(ItemFactory.getNiceDiamondSword());
+            inventory.addItem(ItemFactory.getASetOfZombieSpawnEgg());
+        }
     }
 }

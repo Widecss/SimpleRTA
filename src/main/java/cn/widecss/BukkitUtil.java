@@ -1,6 +1,6 @@
 package cn.widecss;
 
-import cn.widecss.inter.PlayerExecutor;
+import cn.widecss.inter.IPlayerExecutor;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -16,7 +16,7 @@ public class BukkitUtil {
         return onlinePlayers.iterator();
     }
 
-    public static void runOnOnlinePlayer(PlayerExecutor executor) {
+    public static void runOnOnlinePlayer(IPlayerExecutor executor) {
         Iterator<? extends Player> playerIterator = getOnlinePlays();
         while (playerIterator.hasNext()) {
             Player player = playerIterator.next();

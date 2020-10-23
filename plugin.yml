@@ -1,21 +1,15 @@
 name: SimpleRTA
 description: A simple plugin about RTA Game
 main: cn.widecss.SimpleRTA
-version: 0.0.1
+version: 0.1.0
 api-version: 1.16
 
 authors:
   - Widecss
 
 commands:
-  rtahelp:
-    description: A command can print help info to the message list
-  setrunner:
-    description: A command can set the runner to the game
-  rtareload:
-    description: A command can change the plugin settings
-  start:
-    description: A command can start the game
+  rta:
+    description: A command from SimpleRTA plugin
 
 #softdepend:
 #  - ProtocolSupport

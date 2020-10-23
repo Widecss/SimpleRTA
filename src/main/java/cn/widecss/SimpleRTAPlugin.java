@@ -1,9 +1,6 @@
 package cn.widecss;
 
-import cn.widecss.cmd.CommandHelp;
-import cn.widecss.cmd.CommandReload;
-import cn.widecss.cmd.CommandSetRunner;
-import cn.widecss.cmd.CommandStart;
+import cn.widecss.game.GameManager;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -26,6 +23,7 @@ public class SimpleRTAPlugin extends JavaPlugin {
         YamlConfiguration config = (YamlConfiguration) getConfig();
         if (!config.isSet("enabled")) {
             config.set("enabled", true);
+            config.set("debug", false);
             config.options().header(
                     " Configuration\n" +
                             " Creation time: " + new SimpleDateFormat().format(new Date()));
@@ -52,21 +50,9 @@ public class SimpleRTAPlugin extends JavaPlugin {
     }
 
     private void addCommand() {
-        PluginCommand rtaHelp = this.getCommand("rtahelp");
-        if (rtaHelp != null) {
-            rtaHelp.setExecutor(new CommandHelp(this));
-        }
-        PluginCommand rtaReload = this.getCommand("rtareload");
-        if (rtaReload != null) {
-            rtaReload.setExecutor(new CommandReload(this));
-        }
-        PluginCommand setRunner = this.getCommand("setrunner");
-        if (setRunner != null) {
-            setRunner.setExecutor(new CommandSetRunner(this));
-        }
-        PluginCommand start = this.getCommand("start");
-        if (start != null) {
-            start.setExecutor(new CommandStart(this));
+        PluginCommand rta = this.getCommand("rta");
+        if (rta != null) {
+            rta.setExecutor(new CommandHandler(this));
         }
     }
 

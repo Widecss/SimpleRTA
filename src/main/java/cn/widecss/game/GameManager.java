@@ -1,5 +1,7 @@
-package cn.widecss;
+package cn.widecss.game;
 
+import cn.widecss.BukkitUtil;
+import cn.widecss.SimpleRTAPlugin;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -42,7 +44,6 @@ public class GameManager {
                 GameManager.this.setStarted(true);
             }
         }.runTask(this.context);
-
     }
 
     public void completeGame(Player player) {
@@ -57,7 +58,7 @@ public class GameManager {
         setStarted(false);
     }
 
-    public void reloadGame() {
+    public void resetGame() {
         startTime = 0L;
         completeTime = 0L;
 
@@ -66,6 +67,7 @@ public class GameManager {
 
         gameType = null;
 
+        this.context.getPlayerManager().setRunner(null);
         setStarted(false);
     }
 

@@ -12,8 +12,15 @@ public class ListenerEntity extends BaseListener {
 
     @EventHandler
     public void onEntityDeath(EntityDeathEvent event) {
-        if (event.getEntity().getType().equals(EntityType.ENDER_DRAGON)) {
-            this.context.getGameManager().completeGame(event.getEntity().getKiller());
+        // -- debug --
+        if (this.context.getConfig().getBoolean("debug")) {
+            if (event.getEntity().getType().equals(EntityType.ZOMBIE)) {
+                this.context.getGameManager().completeGame(event.getEntity().getKiller());
+            }
+        } else {
+            if (event.getEntity().getType().equals(EntityType.ENDER_DRAGON)) {
+                this.context.getGameManager().completeGame(event.getEntity().getKiller());
+            }
         }
     }
 }

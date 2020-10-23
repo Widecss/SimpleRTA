@@ -8,8 +8,8 @@ public class ItemFactory {
 
     public static ItemStack getNiceDiamondSword() {
         ItemStack item = new ItemStack(Material.DIAMOND_SWORD);
-        item.addEnchantment(Enchantment.DAMAGE_ALL, 10);
-        item.addEnchantment(Enchantment.DURABILITY, 10);
+        item.addEnchantment(Enchantment.DAMAGE_ALL, 5);
+        item.addEnchantment(Enchantment.DURABILITY, 3);
         return item;
     }
 

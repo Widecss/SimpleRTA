@@ -31,17 +31,17 @@ public class GameManager {
                     Thread.sleep(1000);
                 } catch (InterruptedException ignored) {
                 }
-                for (int i = 0; i < 3; i++) {
-                    BukkitUtil.sendToAllPlayer((i + 1) + "!");
+                for (int i = 3; i > 0; i--) {
+                    BukkitUtil.sendToAllPlayer(i + "!");
                     try {
                         Thread.sleep(1000);
                     } catch (InterruptedException ignored) {
                     }
                 }
-                BukkitUtil.sendToAllPlayer("游戏开始!");
                 BukkitUtil.setAllPlayerGameMode(GameMode.SURVIVAL);
                 GameManager.this.startTime = System.currentTimeMillis();
                 GameManager.this.setStarted(true);
+                BukkitUtil.sendToAllPlayer("游戏开始! 尽情享受!");
             }
         }.runTask(this.context);
     }

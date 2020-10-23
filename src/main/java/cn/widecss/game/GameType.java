@@ -1,16 +1,24 @@
 package cn.widecss.game;
 
 public enum GameType {
-    COOPERATE(0), COMBAT(1);
+    COOPERATE(0, "合作"),
+    COMBAT(1, "对抗");
 
     private final int typeID;
 
-    GameType(int typeID) {
+    private final String typeName;
+
+    GameType(int typeID, String typeName) {
         this.typeID = typeID;
+        this.typeName = typeName;
     }
 
     public int getTypeID() {
         return typeID;
+    }
+
+    public String getTypeName() {
+        return typeName;
     }
 
     public static GameType getFromID(int typeID) {

@@ -1,6 +1,9 @@
 package cn.widecss;
 
 import cn.widecss.game.GameManager;
+import cn.widecss.listener.ListenerBlock;
+import cn.widecss.listener.ListenerEntity;
+import cn.widecss.listener.ListenerPlayer;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -38,6 +41,10 @@ public class SimpleRTAPlugin extends JavaPlugin {
     public void onEnable() {
         if (enabled) {
             getLogger().info("SimpleRTA 已启用");
+
+            getServer().getPluginManager().registerEvents(new ListenerBlock(this),this);
+            getServer().getPluginManager().registerEvents(new ListenerEntity(this),this);
+            getServer().getPluginManager().registerEvents(new ListenerPlayer(this),this);
             this.addCommand();
         } else {
             this.setEnabled(false);
@@ -46,7 +53,7 @@ public class SimpleRTAPlugin extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        getLogger().info("SimpleRTA 已禁用");
+        getLogger().info("SimpleRTA 已卸载");
     }
 
     private void addCommand() {
